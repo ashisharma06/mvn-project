@@ -28,6 +28,23 @@ steps:
     mergeTestResults: true
     testRunTitle: 'Maven Unit Test Results'
 
+    # ... (your existing trigger, pool, and maven task)
+
+- task: CopyFiles@2
+  displayName: 'Copy build output to Staging Directory'
+  inputs:
+    # This selects your built jar file from the target directory
+    SourceFolder: '$(System.DefaultWorkingDirectory)/target'
+    Contents: '**/*.jar' 
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Build Artifacts'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'MyArtifact'
+    publishLocation: 'Container'
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
