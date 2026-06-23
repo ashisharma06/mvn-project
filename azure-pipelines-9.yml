@@ -6,7 +6,8 @@
 trigger:
 - main
 
-pool: my-personal-computer
+pool:
+  vmImage: 'ubuntu-latest'
   
 
 steps:
